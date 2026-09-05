@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }} · {{ metadata.title }}{% else %}{{ metadata.title }}{% endif %}</title>
+    <meta name="description" content="{{ description or metadata.description }}">
+
+    <meta property="og:type" content="{% if page.url != '/' %}article{% else %}website{% endif %}">
+    <meta property="og:title" content="{{ title or metadata.title }}">
+    <meta property="og:description" content="{{ description or metadata.description }}">
+    <meta property="og:url" content="{{ page.url | absoluteUrl(metadata.url) }}">
+    {% if image %}
+    <meta property="og:image" content="{{ image | absoluteUrl(metadata.url) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    {% else %}
+    <meta name="twitter:card" content="summary">
+    {% endif %}
+
+    <link rel="canonical" href="{{ page.url | absoluteUrl(metadata.url) }}">
+    <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="stylesheet" href="/css/index.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="site-title" href="/">{{ metadata.title }}</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/">Writing</a>
+        <a href="{{ metadata.author.github }}" rel="me">GitHub</a>
+        <a href="/feed.xml">RSS</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        &copy; {{ metadata.author.name }} &middot;
+        built with <a href="https://www.11ty.dev/">Eleventy</a> &middot;
+        this page follows your system light or dark setting
+      </p>
+    </footer>
+  </body>
+</html>

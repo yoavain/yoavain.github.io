@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+---
+<article class="post h-entry">
+  <header class="post-header">
+    <h1 class="post-title p-name">{{ title }}</h1>
+    {% if subtitle %}<p class="post-subtitle">{{ subtitle }}</p>{% endif %}
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | htmlDateString }}">
+        {{ page.date | readableDate }}
+      </time>
+      <span aria-hidden="true">&middot;</span>
+      <span>{{ content | readingTime }} min read</span>
+    </p>
+  </header>
+
+  {% if image %}
+  <figure class="post-cover">
+    <img src="{{ image }}" alt="{{ image_alt }}" width="1600" height="838" loading="eager" decoding="async">
+  </figure>
+  {% endif %}
+
+  <div class="post-body e-content">
+    {{ content | safe }}
+  </div>
+
+  {% if tags %}
+  <footer class="post-tags">
+    {% for tag in tags %}{% if tag != "posts" %}<span class="tag">{{ tag }}</span>{% endif %}{% endfor %}
+  </footer>
+  {% endif %}
+
+  <nav class="post-nav">
+    <a href="/">&larr; All writing</a>
+  </nav>
+</article>

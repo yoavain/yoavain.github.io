@@ -1,0 +1,10 @@
+node_modules/
+_site/
+.cache/
+.eleventy.cache/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+/.idea/
+/.qodo/
+/*.iml

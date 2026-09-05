@@ -1,0 +1,500 @@
+/* ---------------------------------------------------------------------------
+   Theme tokens.
+
+   Every colour is defined once here, in the light palette. The dark block
+   further down redefines the same names and nothing else, so there is exactly
+   one place to change a colour and no way for the two themes to drift apart.
+
+   There is no toggle and no JavaScript: the page follows the operating system
+   or browser setting via prefers-color-scheme, which means no flash of the
+   wrong theme on first paint.
+   --------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --bg: #fdfdfc;
+  --bg-subtle: #f2f1ee;
+  --bg-code: #f6f5f2;
+
+  --fg: #1b1b1a;
+  --fg-muted: #5f5d58;
+  --fg-faint: #8a8780;
+
+  --link: #0b5fbf;
+  --link-hover: #093f80;
+
+  --border: #e2e0da;
+  --border-strong: #cbc8c0;
+
+  --accent: #b3471a;
+
+  /* Syntax highlighting */
+  --tok-comment: #7d7a72;
+  --tok-punct: #5f5d58;
+  --tok-keyword: #a626a4;
+  --tok-string: #2f7d31;
+  --tok-number: #b3471a;
+  --tok-function: #0b5fbf;
+  --tok-operator: #986801;
+  --tok-deleted: #b3261e;
+
+  --measure: 68ch;
+  --radius: 6px;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --bg: #14171c;
+    --bg-subtle: #1b1f26;
+    --bg-code: #1b1f26;
+
+    --fg: #dfe2e6;
+    --fg-muted: #a2a8b0;
+    --fg-faint: #767d86;
+
+    --link: #6fb2ff;
+    --link-hover: #a3cdff;
+
+    --border: #262b33;
+    --border-strong: #39404a;
+
+    --accent: #f0865a;
+
+    --tok-comment: #7d8590;
+    --tok-punct: #a2a8b0;
+    --tok-keyword: #d2a8ff;
+    --tok-string: #8ddb8c;
+    --tok-number: #f0865a;
+    --tok-function: #6fb2ff;
+    --tok-operator: #ffb86c;
+    --tok-deleted: #ff7b72;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--link-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  padding: 0.5rem 0.9rem;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout chrome
+   --------------------------------------------------------------------------- */
+
+.site-header,
+main,
+.site-footer {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 2rem 1.5rem;
+}
+
+.site-title {
+  font-weight: 650;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.92rem;
+}
+
+.site-nav a {
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+.site-footer {
+  margin-top: 5rem;
+  padding-block: 1.75rem 3rem;
+  border-top: 1px solid var(--border);
+  color: var(--fg-faint);
+  font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Home
+   --------------------------------------------------------------------------- */
+
+.intro h1 {
+  font-size: clamp(1.9rem, 5vw, 2.4rem);
+  letter-spacing: -0.025em;
+  margin: 0 0 0.35rem;
+}
+
+.intro .tagline {
+  margin: 0 0 3rem;
+  color: var(--fg-muted);
+  font-size: 1.1rem;
+}
+
+.post-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-list li + li {
+  margin-top: 2.25rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-card h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.post-card h2 a {
+  text-decoration: none;
+}
+
+.post-card h2 a:hover {
+  text-decoration: underline;
+}
+
+.post-card-summary {
+  margin: 0.5rem 0 0;
+  color: var(--fg-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Post
+   --------------------------------------------------------------------------- */
+
+.post-header {
+  margin-bottom: 2.5rem;
+}
+
+.post-title {
+  font-size: clamp(2rem, 6vw, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.6rem;
+}
+
+.post-subtitle {
+  margin: 0 0 1rem;
+  color: var(--fg-muted);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+.post-meta {
+  margin: 0;
+  color: var(--fg-faint);
+  font-size: 0.88rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.post-cover {
+  margin: 0 0 2.5rem;
+}
+
+.post-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.post-body > * + * {
+  margin-top: 1.3em;
+}
+
+.post-body h2 {
+  margin-top: 2.75rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.post-body h3 {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+.post-body strong {
+  font-weight: 650;
+  color: var(--fg);
+}
+
+.post-body hr {
+  margin-block: 3rem;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.post-body blockquote {
+  margin-inline: 0;
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--border-strong);
+  color: var(--fg-muted);
+}
+
+.post-body ul,
+.post-body ol {
+  padding-left: 1.4rem;
+}
+
+.post-body li + li {
+  margin-top: 0.4rem;
+}
+
+.post-tags {
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+}
+
+.post-nav {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+.post-nav a {
+  text-decoration: none;
+}
+
+.post-nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   Tables and code
+
+   Both can be wider than the measure, so each scrolls inside its own box
+   rather than making the whole page scroll sideways.
+   --------------------------------------------------------------------------- */
+
+.post-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.post-body th,
+.post-body td {
+  text-align: left;
+  padding: 0.55rem 0.9rem 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.post-body th {
+  color: var(--fg-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+:not(pre) > code {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  overflow-wrap: break-word;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem 1.1rem;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.87rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+pre code {
+  font-size: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* Prism tokens, wired to the theme variables above so they swap with it. */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--tok-comment);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--tok-punct);
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--tok-deleted);
+}
+
+.token.boolean,
+.token.number {
+  color: var(--tok-number);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--tok-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+  color: var(--tok-operator);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--tok-keyword);
+}
+
+.token.function,
+.token.class-name {
+  color: var(--tok-function);
+}
+
+.token.regex,
+.token.important {
+  color: var(--tok-number);
+}
+
+.token.important,
+.token.bold {
+  font-weight: 600;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

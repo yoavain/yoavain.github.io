@@ -1,0 +1,21 @@
+{
+  "name": "yoavain.github.io",
+  "version": "1.0.0",
+  "description": "Personal site and blog of Yoav Vainrich.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve --quiet",
+    "build": "eleventy",
+    "clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-plugin-rss": "^3.0.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2"
+  }
+}
