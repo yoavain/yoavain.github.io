@@ -1,5 +1,7 @@
+{%- set lang = lang or metadata.language -%}
+{%- set t = i18n[lang] or i18n.en -%}
 <!doctype html>
-<html lang="{{ metadata.language }}">
+<html lang="{{ lang }}"{% if lang == "he" %} dir="rtl"{% endif %}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,14 +24,14 @@
     <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{{ t.skip }}</a>
 
     <header class="site-header">
       <a class="site-title" href="/">{{ metadata.title }}</a>
       <nav class="site-nav" aria-label="Main">
-        <a href="/">Writing</a>
-        <a href="{{ metadata.author.github }}" rel="me">GitHub</a>
-        <a href="/feed.xml">RSS</a>
+        <a href="/">{{ t.writing }}</a>
+        <a href="{{ metadata.author.github }}" rel="me">{{ t.github }}</a>
+        <a href="/feed.xml">{{ t.rss }}</a>
       </nav>
     </header>
 
@@ -40,8 +42,8 @@
     <footer class="site-footer">
       <p>
         &copy; {{ metadata.author.name }} &middot;
-        built with <a href="https://www.11ty.dev/">Eleventy</a> &middot;
-        this page follows your system light or dark setting
+        {{ t.built }} <a href="https://www.11ty.dev/">Eleventy</a> &middot;
+        {{ t.follows }}
       </p>
     </footer>
   </body>

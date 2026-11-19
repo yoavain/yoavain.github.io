@@ -137,11 +137,11 @@ a:focus-visible {
 
 .skip-link {
   position: absolute;
-  left: -9999px;
+  inset-inline-start: -9999px;
 }
 
 .skip-link:focus {
-  left: 1rem;
+  inset-inline-start: 1rem;
   top: 1rem;
   z-index: 10;
   padding: 0.5rem 0.9rem;
@@ -327,14 +327,14 @@ main,
 
 .post-body blockquote {
   margin-inline: 0;
-  padding-left: 1.1rem;
-  border-left: 3px solid var(--border-strong);
+  padding-inline-start: 1.1rem;
+  border-inline-start: 3px solid var(--border-strong);
   color: var(--fg-muted);
 }
 
 .post-body ul,
 .post-body ol {
-  padding-left: 1.4rem;
+  padding-inline-start: 1.4rem;
 }
 
 .post-body li + li {
@@ -389,8 +389,9 @@ main,
 
 .post-body th,
 .post-body td {
-  text-align: left;
-  padding: 0.55rem 0.9rem 0.55rem 0;
+  text-align: start;
+  padding-block: 0.55rem;
+  padding-inline: 0 0.9rem;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
@@ -519,7 +520,7 @@ pre code {
   .post-cover {
     --wb: min(var(--wide), calc(100vw - 2.5rem));
     width: var(--wb);
-    margin-left: calc(50% - var(--wb) / 2);
+    margin-inline-start: calc(50% - var(--wb) / 2);
   }
 
   /* Centred on the text column, as wide as its content, never narrower than
@@ -557,9 +558,9 @@ pre code {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 100%;
+    inset-inline-start: 100%;
     width: 11.5rem;
-    margin-left: 1.5rem;
+    margin-inline-start: 1.5rem;
   }
 
   .post-toc-inner {
@@ -581,12 +582,13 @@ pre code {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-left: 1px solid var(--border);
+    border-inline-start: 1px solid var(--border);
   }
 
   .post-toc a {
     display: block;
-    padding: 0.3rem 0 0.3rem 0.8rem;
+    padding-block: 0.3rem;
+    padding-inline: 0.8rem 0;
     color: var(--fg-muted);
     text-decoration: none;
   }
@@ -601,8 +603,8 @@ pre code {
    diagram never covers it. */
 @media (min-width: 1700px) {
   .post-toc {
-    left: calc(50% + var(--wide) / 2 + 1.5rem);
-    margin-left: 0;
+    inset-inline-start: calc(50% + var(--wide) / 2 + 1.5rem);
+    margin-inline-start: 0;
   }
 }
 
@@ -623,4 +625,87 @@ pre code {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Tip box
+
+   A short side note inside a post. Write it as an HTML block in the Markdown,
+   with a blank line before and after the text so the text is still Markdown:
+
+     <div class="tip" data-label="Tip">
+
+     The text of the tip.
+
+     </div>
+
+   The label comes from data-label, so one rule serves every language.
+   --------------------------------------------------------------------------- */
+
+.post-body .tip {
+  margin-block: 1.8em;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 0.95em;
+}
+
+.post-body .tip::before {
+  content: attr(data-label);
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.post-body .tip p {
+  margin: 0;
+}
+
+.post-body .tip p + p {
+  margin-top: 0.6em;
+}
+
+:lang(he) .post-body .tip::before {
+  letter-spacing: normal;
+}
+
+/* ---------------------------------------------------------------------------
+   Right-to-left pages (Hebrew)
+
+   A page with dir="rtl" mirrors by itself: the flex rows, the text alignment
+   and every logical property above. Three things need a rule of their own.
+   --------------------------------------------------------------------------- */
+
+/* Centring with left: 50% and translateX(-50%) assumes the box starts at the
+   left edge. In a right-to-left page it starts at the right edge, so the same
+   idea is mirrored. */
+@media (min-width: 1000px) {
+  [dir="rtl"] .post-body table,
+  [dir="rtl"] .post-body p:has(> img:only-child) > img:not([width]) {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+/* Code reads left to right, also inside a Hebrew sentence. */
+pre,
+code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+pre {
+  text-align: left;
+}
+
+/* Negative letter-spacing suits Latin headings. It hurts Hebrew letters. */
+:lang(he) :is(h1, h2, h3, .site-title, .post-toc-title) {
+  letter-spacing: normal;
 }

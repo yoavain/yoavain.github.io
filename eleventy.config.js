@@ -30,8 +30,9 @@ export default async function (eleventyConfig) {
   });
 
   // 5 September 2026
-  eleventyConfig.addFilter("readableDate", (value) =>
-    new Date(value).toLocaleDateString("en-GB", {
+  // The optional second argument is the language of the page: "he" gives 5 בספטמבר 2026.
+  eleventyConfig.addFilter("readableDate", (value, lang) =>
+    new Date(value).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB", {
       year: "numeric",
       month: "long",
       day: "numeric",

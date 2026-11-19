@@ -1,16 +1,17 @@
 ---
 layout: layouts/base.njk
 ---
+{%- set t = i18n[lang or metadata.language] or i18n.en -%}
 <article class="post h-entry">
   <header class="post-header">
     <h1 class="post-title p-name">{{ title }}</h1>
     {% if subtitle %}<p class="post-subtitle">{{ subtitle }}</p>{% endif %}
     <p class="post-meta">
       <time class="dt-published" datetime="{{ page.date | htmlDateString }}">
-        {{ page.date | readableDate }}
+        {{ page.date | readableDate(lang) }}
       </time>
       <span aria-hidden="true">&middot;</span>
-      <span>{{ content | readingTime }} min read</span>
+      <span>{% set rt = content | readingTime %}{% if rt == 1 %}{{ t.minReadOne }}{% else %}{{ rt }} {{ t.minRead }}{% endif %}</span>
     </p>
   </header>
 
@@ -23,9 +24,9 @@ layout: layouts/base.njk
   <div class="post-main">
     {% set toc = content | tocItems %}
     {% if toc.length > 1 %}
-    <nav class="post-toc" aria-label="On this page">
+    <nav class="post-toc" aria-label="{{ t.onThisPage }}">
       <div class="post-toc-inner">
-        <p class="post-toc-title">On this page</p>
+        <p class="post-toc-title">{{ t.onThisPage }}</p>
         <ol>
           {% for item in toc %}<li><a href="#{{ item.id }}">{{ item.text }}</a></li>
           {% endfor %}
@@ -45,6 +46,6 @@ layout: layouts/base.njk
   {% endif %}
 
   <nav class="post-nav">
-    <a href="/">&larr; All writing</a>
+    <a href="/"><span aria-hidden="true">{% if lang == "he" %}&rarr;{% else %}&larr;{% endif %}</span> {{ t.allWriting }}</a>
   </nav>
 </article>
