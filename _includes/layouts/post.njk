@@ -20,8 +20,22 @@ layout: layouts/base.njk
   </figure>
   {% endif %}
 
-  <div class="post-body e-content">
-    {{ content | safe }}
+  <div class="post-main">
+    {% set toc = content | tocItems %}
+    {% if toc.length > 1 %}
+    <nav class="post-toc" aria-label="On this page">
+      <div class="post-toc-inner">
+        <p class="post-toc-title">On this page</p>
+        <ol>
+          {% for item in toc %}<li><a href="#{{ item.id }}">{{ item.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </div>
+    </nav>
+    {% endif %}
+    <div class="post-body e-content">
+      {{ content | headingIds | safe }}
+    </div>
   </div>
 
   {% if tags %}

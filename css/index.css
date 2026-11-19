@@ -39,7 +39,8 @@
   --tok-operator: #986801;
   --tok-deleted: #b3261e;
 
-  --measure: 68ch;
+  --measure: 80ch;
+  --wide: 1100px;
   --radius: 6px;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -90,6 +91,13 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+}
+
+/* Desktop screens get a larger root size. Everything sized in rem grows with it. */
+@media (min-width: 1000px) {
+  html {
+    font-size: 112.5%;
+  }
 }
 
 body {
@@ -482,6 +490,117 @@ pre code {
 
 .token.italic {
   font-style: italic;
+}
+
+/* ---------------------------------------------------------------------------
+   Wide screens
+
+   The text keeps its reading measure. The cover image and tables may use more
+   of the screen, up to --wide, and a table of contents sits in the right
+   margin. Below these widths nothing changes.
+   --------------------------------------------------------------------------- */
+
+.post-main {
+  position: relative;
+}
+
+.post-toc {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .post-cover {
+    --wb: min(var(--wide), calc(100vw - 2.5rem));
+    width: var(--wb);
+    margin-left: calc(50% - var(--wb) / 2);
+  }
+
+  /* Centred on the text column, as wide as its content, never narrower than
+     the text and never wider than --wide. It sits above the contents list. */
+  .post-body table {
+    position: relative;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    min-width: 100%;
+    max-width: min(var(--wide), calc(100vw - 2.5rem));
+    background: var(--bg);
+  }
+
+  /* A picture that stands alone in a paragraph, such as a diagram: centred on
+     the text column, shown at its own size up to --wide. A picture with a width
+     attribute, such as a small inline icon, keeps that size. */
+  .post-body p:has(> img:only-child) > img:not([width]) {
+    position: relative;
+    z-index: 1;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: auto;
+    max-width: min(var(--wide), calc(100vw - 2.5rem));
+    border-radius: var(--radius);
+  }
+}
+
+@media (min-width: 1280px) {
+  .post-toc {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 13rem;
+    margin-left: 1.5rem;
+  }
+
+  .post-toc-inner {
+    position: sticky;
+    top: 2rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .post-toc-title {
+    margin: 0 0 0.6rem;
+    color: var(--fg-faint);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .post-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--border);
+  }
+
+  .post-toc a {
+    display: block;
+    padding: 0.3rem 0 0.3rem 0.8rem;
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+
+  .post-toc a:hover,
+  .post-toc a:focus-visible {
+    color: var(--link);
+  }
+}
+
+/* On the widest screens the contents list sits beyond the wide pictures, so a
+   diagram never covers it. */
+@media (min-width: 1700px) {
+  .post-toc {
+    left: calc(50% + var(--wide) / 2 + 1.5rem);
+    margin-left: 0;
+  }
+}
+
+.post-body h2 {
+  scroll-margin-top: 1.5rem;
 }
 
 /* ---------------------------------------------------------------------------
