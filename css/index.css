@@ -93,10 +93,17 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Desktop screens get a larger root size. Everything sized in rem grows with it. */
+/* Desktop screens get a larger root size. Everything sized in rem grows with it,
+   and the text measure is in characters, so the text column grows with it. */
 @media (min-width: 1000px) {
   html {
-    font-size: 112.5%;
+    font-size: 118.75%;
+  }
+}
+
+@media (min-width: 1600px) {
+  html {
+    font-size: 125%;
   }
 }
 
@@ -544,14 +551,14 @@ pre code {
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1360px) {
   .post-toc {
     display: block;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 100%;
-    width: 13rem;
+    width: 11.5rem;
     margin-left: 1.5rem;
   }
 
