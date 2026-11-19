@@ -396,7 +396,15 @@ main,
   vertical-align: top;
 }
 
+/* A thin vertical line between the columns and on both outer edges. */
+.post-body th,
+.post-body td {
+  border-inline: 1px solid var(--border);
+  padding-inline: 0.9rem;
+}
+
 .post-body th {
+  border-top: 1px solid var(--border);
   color: var(--fg-muted);
   font-weight: 600;
   white-space: nowrap;
@@ -708,4 +716,30 @@ pre {
 /* Negative letter-spacing suits Latin headings. It hurts Hebrew letters. */
 :lang(he) :is(h1, h2, h3, .site-title, .post-toc-title) {
   letter-spacing: normal;
+}
+
+/* A table of numbers (class "speeds"): one wide label column, then equal columns with the
+   values centred. The columns share the width, so the headers wrap on a narrow screen. */
+.post-body table.speeds {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  left: auto;
+  right: auto;
+  transform: none;
+}
+
+.post-body table.speeds th:first-child {
+  width: 28%;
+}
+
+.post-body table.speeds th {
+  white-space: normal;
+}
+
+.post-body table.speeds th:not(:first-child),
+.post-body table.speeds td:not(:first-child) {
+  text-align: center;
 }
