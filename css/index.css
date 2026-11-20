@@ -379,6 +379,14 @@ main,
    rather than making the whole page scroll sideways.
    --------------------------------------------------------------------------- */
 
+/* A picture never becomes wider than the text column on a narrow screen. Without
+   this, a diagram shows at its own pixel width and the whole page scrolls sideways.
+   The wide-screen rules below set their own, larger limit. */
+.post-body img {
+  max-width: 100%;
+  height: auto;
+}
+
 .post-body table {
   display: block;
   width: 100%;
