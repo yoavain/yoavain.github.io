@@ -235,6 +235,33 @@ main,
   border-top: 1px solid var(--border);
 }
 
+/* The thumbnail sits where the text starts. A row with dir="rtl" mirrors by itself. */
+.post-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.post-card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-card-thumb {
+  flex: none;
+  width: 6rem;
+  height: auto;
+  margin-top: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+@media (min-width: 600px) {
+  .post-card-thumb {
+    width: 10rem;
+  }
+}
+
 .post-card h2 {
   margin: 0 0 0.3rem;
   font-size: 1.4rem;

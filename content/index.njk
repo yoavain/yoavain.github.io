@@ -15,11 +15,14 @@ eleventyExcludeFromCollections: true
     {%- for post in posts %}
     <li{% if post.data.lang == "he" %} lang="he" dir="rtl"{% endif %}>
       <article class="post-card">
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-        <p class="post-meta">
-          <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate(post.data.lang) }}</time>
-        </p>
-        {% if post.data.subtitle %}<p class="post-card-summary">{{ post.data.subtitle }}</p>{% endif %}
+        {% if post.data.image %}<img class="post-card-thumb" src="{{ post.data.image }}" alt="" width="1600" height="838" loading="lazy" decoding="async">{% endif %}
+        <div class="post-card-text">
+          <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+          <p class="post-meta">
+            <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate(post.data.lang) }}</time>
+          </p>
+          {% if post.data.subtitle %}<p class="post-card-summary">{{ post.data.subtitle }}</p>{% endif %}
+        </div>
       </article>
     </li>
     {%- endfor %}
